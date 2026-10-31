@@ -30,6 +30,27 @@ Long conversations are expensive: every step re-reads the whole conversation.
   stand on its own: the goal, which items, relevant files, decisions already made, and "read CLAUDE.md first".
   Create it with the project's repo as `source_url`. Then tell the owner the new session exists and what it will do.
 
+## Choosing the model
+
+Pick the cheapest model that can do the job well, per session and per helper:
+- **Sonnet** (`claude-sonnet-5-5`): the default for routine features: a new setting or page, wiring existing pieces
+  together, tests, docs, fixes with a known cause.
+- **Opus** (`claude-opus-5-5`): hard design or uncertain territory: new architecture, undocumented system behavior,
+  tricky debugging, anything that needs a prototype first.
+- **Haiku** (`claude-haiku-5-5`): the `scout`/`chore` helpers.
+When creating a session, pass `model` and tell the owner which model and why. If a Sonnet session fails twice at the
+same problem, stop and hand that problem to an Opus session instead of trying a third time.
+
+## Plans
+
+- When the owner approves a plan for a feature, save it as `docs/plans/<short-name>.md` (goal, decisions, steps,
+  test steps, open questions) and push it to `main`. The session that builds it reads that file instead of
+  re-planning. Tick off steps in the file as they're done, so a new session can pick up mid-feature.
+- **Prototype risky ideas first.** If a feature depends on something that might not work (undocumented APIs, OS
+  limits, effects nobody has tried), first prove the core trick in a tiny throwaway program (< ~100 lines, in the
+  scratchpad or a `spikes/` folder that isn't merged). Only build the real feature once it works, and record what
+  failed in the project's "tried and doesn't work" list.
+
 ## Branches
 
 - **Every feature gets its own branch** from the latest `main`: `feature/<short-name>`; fixes to something already
@@ -52,6 +73,17 @@ Long conversations are expensive: every step re-reads the whole conversation.
   Keep planning, design, debugging, risky or system-level changes, and reviewing helpers' work for yourself.
   A helper's mistake costs more to fix than it saved; when in doubt, do it yourself.
 
+## Working habits that save tokens
+
+- Run independent steps in parallel (several reads/searches in one go).
+- Don't re-read a file right after editing it; the edit tool already confirms success.
+- Keep tool output small: limit search results, read files by line range, filter logs.
+- Prefer one larger edit over many tiny ones to the same place.
+- Let automated checks (build, tests, CI) find problems before asking the owner to test by hand. When the owner
+  must test, give a short numbered checklist and ask for specific results (what happened, exact error text).
+- Keep always-loaded files (`CLAUDE.md`, `AGENTS.md`) short; put reference material (recipes, long lists) in
+  `docs/` and open it only when needed.
+
 ## Learned behaviors
 
 Add new ones at the bottom, dated.
@@ -61,3 +93,5 @@ Add new ones at the bottom, dated.
 - 2026-10-31: Use code maps, quiet builds and cheap helper agents by default to save tokens.
 - 2026-10-31: A separate branch for every feature; merge to `main` only after the owner confirms it works.
 - 2026-10-31: General rules live in `cing-h/claude-standards`; each project's `CLAUDE.md` holds only its specifics.
+- 2026-10-31: Choose the model per session (Sonnet default, Opus for hard design, Haiku helpers); approved plans go
+  to `docs/plans/`; prototype risky ideas first; follow the token-saving working habits.
