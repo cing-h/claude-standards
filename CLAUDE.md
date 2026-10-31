@@ -95,3 +95,5 @@ Add new ones at the bottom, dated.
 - 2026-10-31: General rules live in `cing-h/claude-standards`; each project's `CLAUDE.md` holds only its specifics.
 - 2026-10-31: Choose the model per session (Sonnet default, Opus for hard design, Haiku helpers); approved plans go
   to `docs/plans/`; prototype risky ideas first; follow the token-saving working habits.
+- 2026-10-31: On the owner's PC, coding projects live in `OneDrive\Desktop\Coding Project\Claude Coding Scripts`
+  (one folder per repo). Clone new projects there and give local paths relative to it.

@@ -22,11 +22,12 @@ git clone --depth 1 https://github.com/cing-h/claude-standards ~/claude-standard
 Once, in PowerShell:
 
 ```powershell
-git clone https://github.com/cing-h/claude-standards "$HOME\claude-standards"
-& "$HOME\claude-standards\install.ps1"
+cd "$HOME\OneDrive\Desktop\Coding Project\Claude Coding Scripts"
+git clone https://github.com/cing-h/claude-standards
+& .\claude-standards\install.ps1
 ```
 
-After Claude adds new rules: `git -C "$HOME\claude-standards" pull` and run `install.ps1` again.
+After Claude adds new rules: `git pull` in the `claude-standards` folder and run `install.ps1` again.
 
 ## Changing the rules
 
